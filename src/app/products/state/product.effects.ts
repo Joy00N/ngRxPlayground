@@ -32,4 +32,28 @@ export class ProductEffects {
             )
         )
     );
+
+    @Effect()
+    deleteProduct$ = this.actions$.pipe(
+        ofType(productActions.ProductActionTypes.DeleteProduct),
+        map((action: productActions.DeleteProduct) => action.payload),
+        mergeMap((productId: number) =>
+            this.productService.deleteProduct(productId).pipe(
+                map(() => (new productActions.DeleteProductSuccess(productId))),
+                catchError(err => of(new productActions.DeleteProductFail(err)))
+            )
+        )
+    );
+
+    @Effect()
+    createProduct$ = this.actions$.pipe(
+        ofType(productActions.ProductActionTypes.CreateProduct),
+        map((action: productActions.CreateProduct) => action.payload),
+        mergeMap((product: Product) =>
+            this.productService.createProduct(product).pipe(
+                map((newProduct) => (new productActions.CreateProductSuccess(newProduct))),
+                catchError(err => of(new productActions.CreateProductFail(err)))
+            )
+        )
+    );
 }
