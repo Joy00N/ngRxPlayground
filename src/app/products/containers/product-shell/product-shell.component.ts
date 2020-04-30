@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Product} from '../../product';
 import {ProductService} from '../../product.service';
 import {select, Store} from "@ngrx/store";
-import * as fromProduct from "../../state/product.reducer";
+import * as fromProduct from "../../state/";
 import * as productActions from "../../state/product.actions";
+
 import {Observable} from "rxjs";
 
 @Component({
@@ -24,7 +25,6 @@ export class ProductShellComponent implements OnInit {
 
         this.products$ = this.store.pipe(select(fromProduct.getProducts));
         this.errorMessage$ = this.store.pipe(select(fromProduct.getError));
-
         this.selectedProduct$ = this.store.pipe(select(fromProduct.getCurrentProduct));
         this.displayCode$ = this.store.pipe(select(fromProduct.getShowProductCode));
     }
@@ -41,4 +41,19 @@ export class ProductShellComponent implements OnInit {
         this.store.dispatch(new productActions.SetCurrentProduct(product));
     }
 
+    deleteProduct(product: Product): void {
+        this.store.dispatch(new productActions.DeleteProduct(product.id));
+    }
+
+    clearProduct() {
+        this.store.dispatch(new productActions.ClearCurrentProduct());
+    }
+
+    saveProduct(p: Product) {
+        this.store.dispatch(new productActions.CreateProduct(p));
+    }
+
+    updateProduct(p: Product) {
+        this.store.dispatch(new productActions.UpdateProduct(p));
+    }
 }
