@@ -2,12 +2,12 @@
   <div class='col-md-4'>
     <pm-product-list
             [errorMessage]="errorMessage$ | async"
-            [displayCode$]="displayCode$ | async"
-            [products$]="products$ | async"
-            [selectedProduct$]="selectedProduct$ | async"
+            [displayCode]="displayCode$ | async"
+            [products]="products$ | async"
+            [selectedProduct]="selectedProduct$ | async"
             (checked)="checkChanged($event)"
             (initializeNewProduct)="newProduct()"
-            (search)="productSelected($event)"
+            (selected)="productSelected($event)"
     ></pm-product-list>
   </div>
   <div class='col-md-8'>
